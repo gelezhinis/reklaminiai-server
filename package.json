@@ -1,0 +1,34 @@
+{
+  "name": "reklaminiai",
+  "version": "1.0.0",
+  "description": "web page for Karolis",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "author": "Linas Geležauskas",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "@glidejs/glide": "^3.5.2",
+    "@types/sequelize": "^4.28.11",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.1",
+    "connect-flash": "^0.1.1",
+    "cookie": "^0.5.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.6",
+    "express": "^4.17.2",
+    "express-session": "^1.17.2",
+    "express-validator": "^6.14.0",
+    "jsonwebtoken": "^9.0.0",
+    "multer": "^1.4.4",
+    "mysql2": "^2.3.3",
+    "nodemailer": "^6.9.0",
+    "sequelize": "^6.14.1"
+  }
+}

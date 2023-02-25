@@ -1,0 +1,66 @@
+.product-form {
+  width: 20rem;
+  max-width: 90%;
+  margin: auto;
+}
+
+.form-control {
+  margin: auto;
+}
+
+.form-control select.hide {
+  display: none;
+}
+
+.form-control select,
+.form-control label, 
+.form-control input {
+  display: block;
+  width: 100%;
+  height: 25px;
+}
+
+.form-control select,
+.form-control input {
+  margin-bottom: 0.5rem;
+}
+
+.form-control textarea {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+
+.form-control select,
+.form-control input,
+.form-control textarea {
+  border: 1px solid rgb(199, 199, 219);
+  font: inherit;
+  border-radius: 3px;
+}
+
+.form-control input,
+.form-control textarea {
+  padding: 0.2rem;
+}
+
+.form-control #image {
+  height: 2rem;
+}
+
+.form-control select:focus,
+.form-control input:focus,
+.form-control textarea:focus {
+  outline-color: blue;
+}
+
+.form-control input.invalid{
+    border-color: red;
+}
+
+.login-form {
+  width: 20rem;
+  max-width: 90%;
+  margin: auto;
+  display: block;
+}
