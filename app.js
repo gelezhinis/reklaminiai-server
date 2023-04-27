@@ -21,7 +21,10 @@ const User = require('./models/user');
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:3000'
+  origin: 'http://localhost:3000',
+  // origin: ['https://www.reklaminiai.lt', 'https://reklaminiai.lt', 'https://api.reklaminiai.lt'],
+  //default: 'https://www.reklaminiai.lt'
+
 }));
 
 const fileStorage = multer.diskStorage({
@@ -66,10 +69,6 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
   next();
 });
-
-// app.use(cors({
-//   origin: 'http://localhost:3000'
-// }));
 
 
 app.use(express.static(path.join(rootDir, '/public')));
@@ -117,12 +116,12 @@ sequelize
       bcrypt
         .hash(process.env.ADMIN_PASSWORD, 12)
         .then((hashedPassword) => {
-          let token;
-          try {
-            token = jwt.sign({userId: 1}, process.env.JWT_SECRET, {expiresIn: '24h'});
-          } catch(err) {
-            console.log(err.message);
-          }
+          const token = process.env.ADMIN_TOKEN;
+          // try {
+          //   token = jwt.sign({userId: 1}, process.env.JWT_SECRET, {expiresIn: '24h'});
+          // } catch(err) {
+          //   console.log(err.message);
+          // }
           return User.create({
             name: 'Karolis',
             email: 'balciui@gmail.com',

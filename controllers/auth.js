@@ -33,7 +33,7 @@ exports.postAdminLogin = (req, res, next) => {
   User.findOne({ where: { email: email } }).then((admin) => {
     if (!admin) {
       req.flash('error', 'Chujovai įvestas elektrinis paštas');
-      return res.redirect('/admin-login-karolis');
+      return res.redirect('/admin-login-rek');
     }
     return bcrypt
       .compare(password, admin.password)
@@ -201,7 +201,7 @@ exports.postActivateUser = (req, res, next) => {
 
     // res.writeHead(302, {Location: 'http://localhost:3000'})
     // res.status(200).json({message: 'User is Activated', userId: userId});
-    res.redirect('http://localhost:3000/authenticate');
+    res.redirect('https://www.reklaminiai.lt/authenticate');
   }
 };
 
