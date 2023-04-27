@@ -19,5 +19,8 @@ jobs:
     - run: 
         npm install
         npm start
-        pm2 restart
+        pm2 stop 1
+        pm2 start 1
+        pm2 save
+        sudo service nginx restart
 
