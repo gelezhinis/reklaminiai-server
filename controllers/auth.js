@@ -32,7 +32,7 @@ exports.postAdminLogin = (req, res, next) => {
 
   User.findOne({ where: { email: email } }).then((admin) => {
     if (!admin) {
-      req.flash('error', 'Chujovai įvestas elektrinis paštas');
+      req.flash('error', 'Blogai įvestas elektroninis paštas');
       return res.redirect('/admin-login-rek');
     }
     return bcrypt
@@ -48,7 +48,7 @@ exports.postAdminLogin = (req, res, next) => {
           // console.log('Seshinas', req.session);
           return res.status(200).json({ message: 'OK', token: admin.token });
         }
-        req.flash('error', 'Chujovai įvestas slaptažodis');
+        req.flash('error', 'Blogai įvestas slaptažodis');
         // res.redirect('/admin-login-karolis');
         res.status(422).json({ message: req.flash('error') });
       })
@@ -125,13 +125,16 @@ exports.postUserLogin = (req, res, next) => {
   const userEmail = req.body.email;
   const userPassword = req.body.password;
 
+  
   User.findOne({ where: { email: userEmail } }).then((user) => {
     if (!user) {
+      console.log('NEra tokio email', userEmail);
       req.flash(
         'error',
-        'Neteisingai įvestas elektroninis paštas arba slaptažodis'
+        'Vartotojas su tokiu el. paštu nerastas. Prašome užsiregistruoti.'
       );
-      return res.redirect('/authenticate');
+      res.status(422).json({ message: req.flash('error')});
+      // return res.redirect('/authenticate');
     }
     if (!user.token) {
       return res.status(403).json({

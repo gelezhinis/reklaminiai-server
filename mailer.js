@@ -5,22 +5,30 @@ exports.sendConfirmationEmail = ({toUser, hash}) => {
   
   return new Promise((resolve, reject) => {
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      // service: 'gmail',
+      // auth: {
+      //   user: 'linas.developer@gmail.com',
+      //   pass: 'xpcqcimvyuzwrrqk'
+      // }
+      host: 'pastas.myprint.lt',
+      port: 587,
+      secure: false,
       auth: {
-        user: 'linas.developer@gmail.com',
-        pass: 'xpcqcimvyuzwrrqk'
+        user: 'info@reklaminiai.lt',
+        pass: 'krabas200'
       }
     });
 
+    console.log('URL', process.env.DOMAIN);
+
     const message = {
-      from: 'linas.developer@gmail.com',
-      // to: toUser.email
-      to: 'gelezhinis@gmail.com',
+      from: 'info@reklaminiai.lt',
+      to: toUser.email,
       subject: 'Activate Account',
       html: `
         <h3>Sveiki, ${toUser.name}</h3>
         <p>Malonu kad užsiregistravote pas mus.</p>
-        <p>Patvirtinkite savo registraciją paspausdami šią nuorodą: <a target="_" href="${process.env.DOMAIN}/activate/user/${hash}">Aktyvacijos nuoroda</a> ir galėsite prisijunugti.</p>
+        <p>Patvirtinkite savo registraciją paspausdami šią nuorodą: <a target="_" href="${process.env.DOMAIN}/activate/user/${hash}">Aktyvacijos nuoroda</a> ir galėsite prisijungti.</p>
         <p>Nuoširdžiai Jūsų, Reklaminiai.lt komanda</p>
       `
     }
@@ -40,17 +48,23 @@ exports.sendConfirmationEmail = ({toUser, hash}) => {
 exports.sendResetPassEmail = ({toUser, id, token}) => {
   return new Promise((resolve, reject) => {
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      // service: 'gmail',
+      // auth: {
+      //   user: 'linas.developer@gmail.com',
+      //   pass: 'xpcqcimvyuzwrrqk'
+      // }
+      host: 'pastas.myprint.lt',
+      port: 587,
+      secure: false,
       auth: {
-        user: 'linas.developer@gmail.com',
-        pass: 'xpcqcimvyuzwrrqk'
+        user: 'info@reklaminiai.lt',
+        pass: 'krabas200'
       }
     });
 
     const message = {
-      from: 'linas.developer@gmail.com',
-      // to: toUser.email
-      to: 'gelezhinis@gmail.com',
+      from: 'info@reklaminiai.lt',
+      to: toUser.email,
       subject: 'Slaptažodžio atnaujinimas',
       html: `
         <h3>Sveiki, ${toUser.name}</h3>

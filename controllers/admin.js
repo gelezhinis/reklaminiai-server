@@ -1,4 +1,4 @@
-const fileHelper = require('../utils/file');
+const { deleteFile, loadData } = require('../utils/file');
 
 const { validationResult } = require('express-validator/check');
 
@@ -6,17 +6,17 @@ const Product = require('../models/product');
 
 let previousUrl;
 
-exports.getAddProduct = (req, res, next) => {
-  // res.render('admin/add-product', {
-  //   pageTitle: 'Add Product',
-  //   path: '/admin/add-product',
-  //   editing: false,
-  //   hasError: false,
-  //   isAuthenticated: req.session.isLoggedIn,
-  //   errorMessage: [],
-  //   validationErrors: [],
-  // });
-};
+// exports.getAddProduct = (req, res, next) => {
+//   // res.render('admin/add-product', {
+//   //   pageTitle: 'Add Product',
+//   //   path: '/admin/add-product',
+//   //   editing: false,
+//   //   hasError: false,
+//   //   isAuthenticated: req.session.isLoggedIn,
+//   //   errorMessage: [],
+//   //   validationErrors: [],
+//   // });
+// };
 
 exports.getEditProduct = (req, res, next) => {
   previousUrl = req.headers.referer.replace(/(?:.*?\/){3}/, '/');
@@ -33,10 +33,17 @@ exports.getEditProduct = (req, res, next) => {
     });
 };
 
+exports.getDataFromFile = async (req, res, next) => {
+  const { id } = req.body;
+
+  const data = await loadData(id);
+  res.status(200).json({ data });
+};
+
 exports.postAddProduct = (req, res, next) => {
-  const { category, subcategory, title, price1, price2, price3, price4, price5, price6, description } = req.body;
-  console.log('REQUEST FAILAI', req.files);
-  console.log('REQUEST BODIS', req.body);
+  const { category, subcategory, title, price1, price2, price3, price4, price5, description } = req.body;
+  // console.log('REQUEST FAILAI', req.files);
+  // console.log('REQUEST BODIS', req.body);
   const images = req.files;
   // const images = req.body.imageUrl;
   // console.log('FILES', images);
@@ -47,17 +54,18 @@ exports.postAddProduct = (req, res, next) => {
   images.map(img => {
     imgArray.push(img.path);
   });
+  
   const errors = validationResult(req);
-
   if (!errors.isEmpty()) {
     return res.status(422).json({message: errors.array()});
   }
+
   const imageUrl = imgArray;
   console.log(imageUrl);
 
-  Product.create({ category, subcategory, title, price1, price2, price3, price4, price5, price6, description, imageUrl })
+  Product.create({ category, subcategory, title, price1, price2, price3, price4, price5, description, imageUrl })
     .then((result) => {
-      console.log('Product has been created!');
+      console.log('Product has been created!', result);
       res.status(201).json({message: 'Produktas sukurtas sėkmingai', data: result});
     })
     .catch((err) => {
@@ -67,7 +75,7 @@ exports.postAddProduct = (req, res, next) => {
 };
 
 exports.postEditProduct = (req, res, next) => {
-  const { id, category, subcategory, title, price1, price2, price3, price4, price5, price6, description } = req.body;
+  const { id, category, subcategory, title, price1, price2, price3, price4, price5, description } = req.body;
   const images = req.files;
   const errors = validationResult(req);
 
@@ -89,9 +97,8 @@ exports.postEditProduct = (req, res, next) => {
       product.price3 = price3;
       product.price4 = price4;
       product.price5 = price5;
-      product.price6 = price6;
       if (images.length > 0) {
-        fileHelper.deleteFile(product.imageUrl);
+        deleteFile(product.imageUrl);
         images.map(img => {
           imgArray.push(img.path);
         });
@@ -117,7 +124,7 @@ exports.postDeleteProduct = (req, res, next) => {
       if (!product) {
         next(new Error('Product not found.'));
       }
-      fileHelper.deleteFile(product.imageUrl);
+      deleteFile(product.imageUrl);
       return Product.destroy({ where: { id: prodId } });
     })
     .then((result) => {

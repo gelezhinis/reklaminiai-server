@@ -21,9 +21,9 @@ const User = require('./models/user');
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:3000',
-  // origin: ['https://www.reklaminiai.lt', 'https://reklaminiai.lt', 'https://api.reklaminiai.lt'],
-  //default: 'https://www.reklaminiai.lt'
+  // origin: 'http://localhost:3000',
+  origin: ['https://www.reklaminiai.lt', 'https://reklaminiai.lt', 'https://api.reklaminiai.lt'],
+  default: 'https://www.reklaminiai.lt'
 
 }));
 
@@ -124,7 +124,7 @@ sequelize
           // }
           return User.create({
             name: 'Karolis',
-            email: 'balciui@gmail.com',
+            email: process.env.ADMIN_EMAIL,
             password: hashedPassword,
             token: token
           });
@@ -134,6 +134,7 @@ sequelize
     return user;
   })
   .then((admin) => {
+    // app.listen(8800, () => console.log('Server is listening on port 8800.'));
     app.listen(5000, () => console.log('Server is listening on port 5000.'));
   })
   .catch((err) => {

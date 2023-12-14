@@ -175,9 +175,10 @@ exports.getProductsBySubcategory = (req, res, next) => {
     });
 };
 exports.getProductsByCategory = (req, res, next) => {
-  console.log('CATEGORY', req.params.category);
+  // console.log('CATEGORY', req.params);
   Product.findAll({where: {category: req.params.category}})
     .then((products) => {
+      // console.log('Produktai pagal kategorija', products);
       return res.status(200).json(products);
     })
     .catch((err) => {

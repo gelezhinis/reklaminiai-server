@@ -10,6 +10,8 @@ const router = express.Router();
 // router.get('/add-product', isAuth, adminController.getAddProduct);
 router.get('/edit-product/:productId', isAuth, adminController.getEditProduct);
 
+router.post('/get-data', isAuth, adminController.getDataFromFile);
+
 router.post('/add-product', [
   body('category')
     .isString()
