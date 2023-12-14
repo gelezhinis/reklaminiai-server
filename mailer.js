@@ -5,24 +5,19 @@ exports.sendConfirmationEmail = ({toUser, hash}) => {
   
   return new Promise((resolve, reject) => {
     const transporter = nodemailer.createTransport({
-      // service: 'gmail',
-      // auth: {
-      //   user: 'linas.developer@gmail.com',
-      //   pass: 'xpcqcimvyuzwrrqk'
-      // }
-      host: 'pastas.myprint.lt',
+      host: process.env.NODEMAILER_HOST,
       port: 587,
       secure: false,
       auth: {
-        user: 'info@reklaminiai.lt',
-        pass: 'krabas200'
+        user: process.env.NODEMAILER_USER,
+        pass: process.env.NODEMAILER_PASS
       }
     });
 
     console.log('URL', process.env.DOMAIN);
 
     const message = {
-      from: 'info@reklaminiai.lt',
+      from: process.env.NODEMAILER_USER,
       to: toUser.email,
       subject: 'Activate Account',
       html: `
@@ -48,22 +43,17 @@ exports.sendConfirmationEmail = ({toUser, hash}) => {
 exports.sendResetPassEmail = ({toUser, id, token}) => {
   return new Promise((resolve, reject) => {
     const transporter = nodemailer.createTransport({
-      // service: 'gmail',
-      // auth: {
-      //   user: 'linas.developer@gmail.com',
-      //   pass: 'xpcqcimvyuzwrrqk'
-      // }
-      host: 'pastas.myprint.lt',
+      host: process.env.NODEMAILER_HOST,
       port: 587,
       secure: false,
       auth: {
-        user: 'info@reklaminiai.lt',
-        pass: 'krabas200'
+        user: process.env.NODEMAILER_USER,
+        pass: process.env.NODEMAILER_PASS
       }
     });
 
     const message = {
-      from: 'info@reklaminiai.lt',
+      from: process.env.NODEMAILER_USER,
       to: toUser.email,
       subject: 'Slaptažodžio atnaujinimas',
       html: `
